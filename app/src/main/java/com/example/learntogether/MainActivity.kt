@@ -12,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -25,18 +26,19 @@ class MainActivity : ComponentActivity() {
             LearnTogetherTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(
-                    modifier = Modifier.fillMaxSize(),
+                    modifier = Modifier
+                        .fillMaxSize(),
+
                     color = MaterialTheme.colors.background
                 ) {
-                    Column {
-                        BackgroundImage()
-                        Title(title = getString(R.string.jetpack_compose_tutorial))
-                        Paragraph(
-                            text = getString(R.string.jetpack_compose_explanation)
-                        )
-                        Paragraph(
-                            text = getString(R.string.jetpack_compose_conclusion)
-                        )
+                    Column(
+                        modifier = Modifier
+                            .wrapContentWidth(align = Alignment.CenterHorizontally)
+                            .wrapContentHeight(align = Alignment.CenterVertically),
+                    ) {
+                        ShowTasCompletedIcon()
+                        Message(text = getString(R.string.all_tasks_completed))
+                        Phrase(text = getString(R.string.nice_work))
                     }
                 }
             }
@@ -51,8 +53,8 @@ fun ScreenOne() {
 
 @Composable
 @Preview(showBackground = true)
-fun BackgroundImage() {
-    val image = painterResource(id = R.drawable.bg_compose_background)
+fun ShowTasCompletedIcon() {
+    val image = painterResource(id = R.drawable.ic_task_completed)
     Image(
         painter = image,
         contentDescription = null,
@@ -63,26 +65,31 @@ fun BackgroundImage() {
 }
 
 @Composable
-fun Title(title: String) {
+fun Message(text: String) {
     Text(
-        text = title,
+        text = text,
         fontSize = 24.sp,
+        fontWeight = FontWeight.Bold,
+        textAlign = TextAlign.Center,
         modifier = Modifier
+            .fillMaxWidth()
+            .wrapContentWidth(align = Alignment.CenterHorizontally)
             .padding(horizontal = 16.dp)
-            .padding(top = 16.dp)
+            .padding(top = 24.dp)
             .padding(bottom = 8.dp)
     )
 }
 
 @Composable
-fun Paragraph(text: String) {
+fun Phrase(text: String) {
     Text(
         text = text,
         fontSize = 16.sp,
-        textAlign = TextAlign.Justify,
-        modifier = Modifier.padding(horizontal = 16.dp)
-        .padding(top = 8.dp)
-        .padding(bottom = 8.dp)
+        textAlign = TextAlign.Center,
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp)
+            .padding(bottom = 8.dp)
     )
 }
 
@@ -90,6 +97,6 @@ fun Paragraph(text: String) {
 @Composable
 fun DefaultPreview() {
     LearnTogetherTheme {
-        BackgroundImage()
+
     }
 }
