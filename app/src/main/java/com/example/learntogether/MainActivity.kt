@@ -1,17 +1,20 @@
 package com.example.learntogether
 
+import android.graphics.fonts.FontStyle
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -24,32 +27,14 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             LearnTogetherTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(
-                    modifier = Modifier
-                        .fillMaxSize(),
-
-                    color = MaterialTheme.colors.background
-                ) {
-                    Column(
-                        modifier = Modifier
-                            .wrapContentWidth(align = Alignment.CenterHorizontally)
-                            .wrapContentHeight(align = Alignment.CenterVertically),
-                    ) {
-                        ShowTasCompletedIcon()
-                        Message(text = getString(R.string.all_tasks_completed))
-                        Phrase(text = getString(R.string.nice_work))
-                    }
+                Surface {
+                    LearnScreen()
                 }
             }
         }
     }
 }
 
-@Composable
-fun ScreenOne() {
-
-}
 
 @Composable
 @Preview(showBackground = true)
@@ -65,33 +50,81 @@ fun ShowTasCompletedIcon() {
 }
 
 @Composable
-fun Message(text: String) {
-    Text(
-        text = text,
-        fontSize = 24.sp,
-        fontWeight = FontWeight.Bold,
-        textAlign = TextAlign.Center,
-        modifier = Modifier
-            .fillMaxWidth()
-            .wrapContentWidth(align = Alignment.CenterHorizontally)
-            .padding(horizontal = 16.dp)
-            .padding(top = 24.dp)
-            .padding(bottom = 8.dp)
-    )
+fun LearnScreen() {
+    Column(
+        modifier = Modifier.fillMaxHeight()
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxHeight(0.5f)
+                .fillMaxWidth()
+        ) {
+            Tile(
+                title = "Text composable",
+                color = Color.Green,
+                explanation = "Displays text and follows Material Design guidelines.",
+                width = 0.5f
+            )
+            Tile(
+                title = stringResource(R.string.image_compose),
+                color = Color.Yellow,
+                explanation = stringResource(R.string.image_compose_explanation),
+                width = 1f
+            )
+        }
+
+        Row(
+            modifier = Modifier
+                .fillMaxHeight()
+                .fillMaxWidth()
+        ) {
+            Tile(
+                title = stringResource(R.string.row_composable),
+                color = Color.Cyan,
+                explanation = stringResource(R.string.row_composable_explanation),
+                width = 0.5f
+            )
+            Tile(
+                title = stringResource(R.string.column_composable),
+                color = Color.LightGray,
+                explanation = stringResource(R.string.column_composable_explanation),
+                width = 1f
+            )
+        }
+    }
+
 }
 
 @Composable
-fun Phrase(text: String) {
-    Text(
-        text = text,
-        fontSize = 16.sp,
-        textAlign = TextAlign.Center,
+fun Tile(title: String, color: Color, explanation: String, width: Float) {
+    Column(
         modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 16.dp)
-            .padding(bottom = 8.dp)
-    )
+            .background(color)
+            .fillMaxWidth(width)
+            .fillMaxHeight()
+            .wrapContentWidth(align = Alignment.CenterHorizontally)
+            .wrapContentHeight(align = Alignment.CenterVertically)
+            .padding(horizontal = 16.dp),
+    ) {
+        Text(
+            text = title,
+            fontWeight = FontWeight.Bold,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = 16.dp)
+                .background(Color.Gray), textAlign = TextAlign.Center
+        )
+        Text(
+            text = explanation,
+            fontSize = 16.sp,
+            modifier = Modifier
+                .fillMaxWidth(),
+            textAlign = TextAlign.Justify,
+        )
+    }
+
 }
+
 
 @Preview(showBackground = true)
 @Composable
